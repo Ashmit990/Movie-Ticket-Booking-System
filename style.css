@@ -1,0 +1,664 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&family=Jura:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&family=Jura:wght@300..700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    font-family: "Jost", sans-serif;
+}
+.nav{
+    background-color: #B1BEB0;
+    width: 100%;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.cinema-name-logo{
+    font-family: "Jockey One",sans-serif;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /*border: 0.5px solid black*/
+}
+.cinema-name-logo .logo{
+    width: 57px;
+    height: 47px;
+}
+.search-input{
+    border: 1.4px solid black;
+    height: 60px;
+    width: 270px;
+    display: flex;
+    align-items: center;
+    border-radius: 40px;
+    transition: 0.4s;
+}
+.search-input .search-icon{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    /*border: 0.5px solid black;*/
+    
+}
+.search::placeholder{
+    color: rgba(0, 0, 0, 0.669);
+}
+.search-input .search{
+    height: 100%;
+    width: 81%;
+    background-color:#B1BEB0;
+    border-radius: 40px;
+    padding: 25px;
+    font-size: 25px;
+    border: none;
+    outline: none;
+}
+.search-input:hover{
+    transform: scale(1.05);
+}
+.my-ticket {
+    display: flex;
+    align-items: center;
+    font-family: "Jockey One", sans-serif;
+    font-size: 32px;
+    justify-content: space-between;
+    width: 180px;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 5px; 
+}
+.my-ticket::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    transform: scaleX(0);
+    transition: transform 0.5s ease; 
+}
+
+.my-ticket:hover::after {
+    transform: scaleX(1);
+}
+.img-container{
+    width:100%;
+    height: 250px;
+    /*border: 2px solid black;*/
+    display: flex;
+    background-color: #F6F6F6;
+    
+}
+.img-container .slogan{
+    width: 87%;
+    height:250px;
+    /*border: 0.5px solid black;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.img-container .img{
+    position: relative;
+    width: 13%;
+    margin: auto;
+    overflow: hidden;
+}
+.img img{
+    width: 100%;
+    display: none;
+}
+img.displaySlide{
+    display:block;
+    animation-name: fade;
+    animation-duration: 1.5s;
+    transition: 0.5s;
+}
+.slides img{
+    height: 250px;
+}
+.img button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    width: 30px;
+    padding: 2px;
+    background-color:hsla(0,0%,0%,0.5) ;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.prev{
+    left: 0;
+    transition: 0.3s;
+}
+.prev:hover{
+    border: 1px solid white;
+}
+.next{
+    right: 0;
+    transition: 0.3s;
+}
+.next:hover{
+    border: 1px solid white;
+}
+@keyframes fade {
+    from{opacity :.5}
+    to{opacity :1}
+}
+.slogan .popcorn{
+    width: 300px;
+    height: 249px;
+}
+.img-container .statement{
+    /*border: 2px solid black;*/
+    height: 100%;
+    width: 70%;
+    font-size: 74px;
+    font-family: "Jockey One",sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 25px;
+    color: #023F38;
+}
+.movies-container{
+    background-color: #E9F2F1;
+    width: 100%;
+    min-height: 600px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+.movies-container .now-showing-title{
+    text-align: center;
+    font-size: 48px;
+    color: #430607;
+    font-family: "Jockey One",sans-serif;
+}
+.movies-container .movies{
+    /*border: 0.5px solid black;*/
+    width: 290px;
+    height: 480px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.movies .movie1{
+    width: 100%;
+    height: 90%;
+    border-radius: 30px;
+    /*border: 0.5px solid black;*/
+    transition: opacity 0.3s ease;
+}
+.movies .details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*border: 0.5px solid black;*/
+    border-radius: 40px;
+    width: 235px;
+    height: 10%;
+    font-size: 20px;
+    font-family: "Jockey One",sans-serif;
+
+}
+.movies-container .movies-box{
+    /*border: 0.5px solid black;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+.movies .buy-ticket{
+    width: 140px;
+    height: 70px;
+    font-size: 25px;
+    border-radius: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: "Jost", sans-serif;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-color: #E9F2F1;
+    outline: none;
+    border: 0.5px solid black;
+    color: #430607;
+
+}
+.movies:hover .buy-ticket{
+  opacity: 1;
+}
+.movies:hover .overlay{
+    opacity:0.5;
+}
+.movies .overlay{
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: black;
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease; /* Smooth transition */
+    
+    
+}
+.movies .overlay{
+    height: 432px;
+    border-radius: 30px;
+}
+.search-display-container{
+    width: 100%px;
+    min-height: 300px;
+    border: 0.5px solid black;
+}
+.movies-container .shows{
+    /*border: 0.5px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.shows label{
+    font-size: 23px;
+    border-radius: 30px;
+    padding: 10px;
+    width: 138px;
+    background-color: #BBC4BD;
+    transition:  0.5s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.shows select{
+    font-size: 23px;
+    color: #10230A;
+    background-color: #BBC4BD;
+    border: none;
+    width: 130px;
+    height: 50px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition:  0.5s ease;
+}
+.shows label:hover{
+    border: 0.5px solid black;
+    transform: scale(1.05);
+}
+.shows select:hover{
+    border: 0.5px solid black;
+    transform: scale(1.05);
+}
+label input{
+    width: 30px;
+    height: 20px;
+}
+.movie-selected{
+    width: 100%;
+    height: 50px;
+    border: 0.5px solid white;
+    background-color: #F6F6F6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+.movie-selected .selected-name{
+    font-size: 24px;
+    color: #10230A;
+}
+.movie-selected .selected-date{
+    font-size: 23px;
+    color: #10230A;
+}
+.movie-selected .time{
+    /*border: 0.5px solid black;*/
+    width: 190px;
+    display: flex;
+    font-size: 25px;
+    color: #10230A;
+}
+.showClock{
+    font-size:20px;
+    color: #10230A;
+}
+.total-seats{
+    font-size:20px;
+    color: #10230A;
+}
+.allSeats{
+    font-size: 20px;
+    color: #10230A;
+}
+.expenses{
+    font-size: 20px;
+}
+.seats-screen{
+    width: 70%;
+    min-height: 500px;
+    /*border: 0.5px solid white;*/
+    margin: 8px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+.seats-screen .screen{
+    width: 98%;
+    height: 18px;
+    margin-bottom: 24px;
+    background-color: white;
+    border-bottom: 2px solid #ddd; /* Light gray bottom border */
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.seats-screen .seat-row{
+    width: 87%;
+    /*border: 0.5px solid white;*/
+    margin-top: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.seat-row .box{
+    /*border: 0.5px solid white;*/
+    width: 30px;
+    height: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.box img{
+    width: 18px;
+    height: 22px;
+}
+    
+ .red-white{
+    background-color: red;
+    color: white;
+}
+.todayDate, .tomorrowDate{
+    visibility: hidden;
+    font-size: 1px;
+}
+.total-price{
+    /*border: 0.5px solid white;*/
+    width: 25%;
+    height:42px;
+    margin: 17px auto;
+    background-color: #B0B2A4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+}
+.total-price .price{
+    color: #0D2007;
+    font-size: 20px;
+}
+.total-price .proceed-btn{
+    height:35px;
+    color: #0D2007;
+    font-size: 18px;
+    background-color: #B0B2A4;
+    border: 0.5px solid black;
+    padding-left:9px;
+    padding-right: 10px;
+    padding-top: 2px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.proceed-btn:hover{
+    border: 1px solid black;
+    transform: scale(1.05);
+}
+.red-seat{
+    width: 18px;
+    height: 22px;
+}
+.detail-title{
+    font-size: 40px;
+    text-align: center;
+    color: #0D2007;
+    margin-top: 100px;
+   
+}
+.detail-container{
+    width: 35%;
+    height: 200px;
+    background-color: #B1C3B9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 8PX;
+}
+.detail-container .detail-input{
+    /*border: 0.5px solid black;*/
+    width: 82%;
+    height: 50px;
+    margin: 0px auto;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
+    color: #0D2007;
+}
+.detail-input label{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #0D2007;
+}
+.detail-input .people-name{
+    height: 100%;
+    font-size: 17px;
+    padding-left: 15px;
+    width: 258px;
+    background-color: #D4DCD9;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    color: #0D2007;
+}
+.submit{
+    position: absolute;
+    top: 68%;
+    left: 46%;
+    background-color: #B1C3B9;
+    color: #0D2007;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 20px;
+}
+.initial-ticket-container{
+    width: 230px;
+    height: 320px;
+    background-color: #FFFF;
+    margin: 5px auto;
+    
+}
+
+
+
+.initial-ticket-container .ticket-title{
+    font-size: 18px;
+    text-align: center;
+    font-family: "Jura", sans-serif;
+    
+}
+.initial-ticket-container .qr-container{
+    /*border: 0.5px solid black;*/
+    width:25%;
+    height: 55px;
+    margin: 6px auto;
+    font-family: "Jura", sans-serif;
+}
+.qr-container .qr-code{
+    height: 100%;
+    width: 100%;
+}
+.initial-ticket-container .ticket-movie-name{
+    font-size: 18px;
+    text-align: center;
+}
+.initial-ticket-container .all-details{
+    border: 0.5px solid black;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    height: 105px;
+    padding-top: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.all-details .seat-details{
+    font-size: 11px;
+    margin-top: 1px;
+}
+.initial-ticket-container .price-details{
+    border: 0.5px solid black;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    height: 143px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 11px;
+}
+.price-details .price-title{
+    text-align: center;
+    font-size: 18px;
+}
+.save-my-tickets{
+    
+    height: 45px;
+    width: 130px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    
+}
+.save-my-tickets:hover{
+    transform: scale(1.05);
+}
+.main-box{
+    padding: 0px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    /*border: 0.5px solid white;*/
+    width: 250px;
+    height: 430px;
+}
+ .saved-container{
+    /*border: 0.5px solid white;*/
+    width: 98%;
+    min-height: 650px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transition: 0.5s ease;
+}
+.popup .popup-content{
+    /*border: 2px solid white;*/
+    width: 350px;
+    height: 150px;
+    background-color: #D4DCD9;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    
+}
+.popup-content .removeTitle{
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+.popup-content .removeIt{
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    border:0.5px solid black;
+    outline: none;
+}
+.removeIt:hover{
+    transform: scale(1.05);
+}
+.popup-content .cancel{
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    border:0.5px solid black;
+    outline: none;
+}
+.cancel:hover{
+    transform: scale(1.05);
+}
+
+
