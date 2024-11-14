@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&family=Jura:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&family=Jost:ital,wght@0,100..900;1,100..900&family=Jura:wght@300..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    font-family: "Jost", sans-serif;
+}
+.initial-ticket-container{
+    width: 230px;
+    height: 320px;
+    background-color: #FFFF;
+    margin: 5px auto;
+    
+}
+
+
+
+.initial-ticket-container .ticket-title{
+    font-size: 18px;
+    text-align: center;
+    font-family: "Jura", sans-serif;
+    
+}
+.initial-ticket-container .qr-container{
+    /*border: 0.5px solid black;*/
+    width:25%;
+    height: 55px;
+    margin: 6px auto;
+    font-family: "Jura", sans-serif;
+}
+.qr-container .qr-code{
+    height: 100%;
+    width: 100%;
+}
+.initial-ticket-container .ticket-movie-name{
+    font-size: 18px;
+    text-align: center;
+}
+.initial-ticket-container .all-details{
+    border: 0.5px solid black;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    height: 105px;
+    padding-top: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.all-details .seat-details{
+    font-size: 11px;
+    margin-top: 1px;
+}
+.initial-ticket-container .price-details{
+    border: 0.5px solid black;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    height: 143px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 11px;
+}
+.price-details .price-title{
+    text-align: center;
+    font-size: 18px;
+}
+.save-my-tickets{
+    
+    height: 45px;
+    width: 130px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    
+}
+.save-my-tickets:hover{
+    transform: scale(1.05);
+}
+.main-box{
+    padding: 0px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    /*border: 0.5px solid white;*/
+    width: 250px;
+    height: 430px;
+}
+ .saved-container{
+    /*border: 0.5px solid white;*/
+    width: 98%;
+    min-height: 650px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transition: 0.5s ease;
+}
+.popup .popup-content{
+    /*border: 2px solid white;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 350px;
+    height: 150px;
+    background-color: #D4DCD9;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    
+}
+.popup-content .removeTitle{
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+.popup-content .removeIt{
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    border:0.5px solid black;
+    outline: none;
+}
+.removeIt:hover{
+    transform: scale(1.05);
+}
+.popup-content .cancel{
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    border:0.5px solid black;
+    outline: none;
+}
+.cancel:hover{
+    transform: scale(1.05);
+}
+
+

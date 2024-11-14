@@ -4,51 +4,57 @@ let showClock=document.querySelector(".showClock")
     let allMoney=document.querySelector(".allExpenses")
     let selectedTitle=document.querySelector(".selected-name")
     let selectedCalender=document.querySelector(".selected-date")
-    let namePeople=document.querySelector("#name-people")
-    let emailPeople=document.querySelector("#email-people")
-    let addressPeople=document.querySelector("#address-people")
-document.addEventListener("DOMContentLoaded",()=>{
-    const urlParams= new URLSearchParams(window.location.search)
-    const movieTime=urlParams.get('id')
-    const seats=urlParams.get('seats')
-    const totalExpenses=urlParams.get('money')
-    const movieTitle=urlParams.get('name')
-    const movieCalender=urlParams.get('date')
-    console.log(seats)
-    totalSeats.textContent=seats
-    showClock.textContent=movieTime
-    selectedTitle.textContent=movieTitle
-    selectedCalender.textContent=movieCalender
-    allMoney.textContent=`${totalExpenses}`
-    console.log(movieTime)
-})
-const submitBtn=document.querySelector(".submit")
+   
+    let submitBtn=document.querySelector(".submit")
+ let details=JSON.parse(localStorage.getItem('movieData'))
+ console.log(details)
 
-submitBtn.addEventListener("click", function() {
-    const encodedMovie = decodeURIComponent(selectedTitle.textContent);
-    const encodedDate = decodeURIComponent(selectedCalender.textContent);
-    const encodedTime = decodeURIComponent(showClock.textContent);
+ let {movie,date,time,selectedSeats,totalPrice}=details
+
+ selectedTitle.textContent=movie
+ totalSeats.textContent=selectedSeats
+ allMoney.textContent=totalPrice
+ selectedCalender.textContent=date
+ showClock.textContent=time
+
+ let uniqueKey=`${movie}_${time}_${date}_details`
+
+
+ submitBtn.addEventListener("click",function(){
+    let namePeople=document.querySelector("#name-people").value
+    let emailPeople=document.querySelector("#email-people").value
+    let addressPeople=document.querySelector("#address-people").value
+
+    details.personName=namePeople
+    details.email=emailPeople
+    details.address=addressPeople
+   
+    localStorage.setItem('movieData',JSON.stringify(details))
+    
+ let updatedDetails = JSON.parse(localStorage.getItem('movieData'))
+
+ 
+    console.log(details)
+
+    localStorage.setItem(uniqueKey,JSON.stringify(details))
+
+    let savedTickets=JSON.parse(localStorage.getItem('savedTickets')) || []
+    savedTickets.push(uniqueKey)
+    localStorage.setItem('savedTickets',JSON.stringify(savedTickets))
+
+   redirectToPage(namePeople,emailPeople,addressPeople);
+       
+    
+
+   
 
     
-    let ticketData = {
-        movie: encodedMovie,
-        date: encodedDate,
-        time: encodedTime,
-        seats: decodeURIComponent(totalSeats.textContent),
-        price: decodeURIComponent(allMoney.textContent),
-        name: decodeURIComponent(namePeople.value),
-        email: decodeURIComponent(emailPeople.value),
-        address: decodeURIComponent(addressPeople.value)
-    };
-    let uniqueKey = `${encodedMovie}_${encodedDate}_${encodedTime}`;
+ })
 
-    localStorage.setItem(uniqueKey,JSON.stringify(ticketData))
-
-    let keysArray=JSON.parse(localStorage.getItem('keys')) || []
-    keysArray.push(uniqueKey)
-
-    localStorage.setItem('keys',JSON.stringify(keysArray))
-  
-
-    window.location.href = '/Movie-Booking/components/myTicket.html';
-});
+ function redirectToPage(name, email, address) {
+   if (name === "Ashmit Dahal" && email === "ashmitcristiano07@gmail.com" && address === "Naya Baneshwor, Kathmandu") {
+       window.location.href = "/Movie-Booking/components/admin.html";
+   } else {
+       window.location.href = "/Movie-Booking/components/myTicket.html";
+   }
+}

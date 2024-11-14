@@ -1,9 +1,135 @@
-const slides=document.querySelectorAll(".slides img");
+import { movies } from './movies.js';  //importing array of movies
+
+let moviesBox=document.querySelector(".movies-box")
+let searchBtn=document.querySelector(".search-icon")
+let imgContainer=document.querySelector(".img-container")
+let movieTime=document.querySelector("#time")
+let dateSelected=false
+
+
+let todayDate = document.querySelector(".todayDate");
+let tomorrowDate = document.querySelector(".tomorrowDate");
+let afterTomDate = document.querySelector(".afterr-tomm");
+let afterTomAfterDate = document.querySelector(".afterr-tomm-afterr");
+
+let today = new Date();
+let tomorrow = new Date(today);
+let afterTomorrow = new Date(today);
+let afterTomorrowAfter = new Date(today);
+
+tomorrow.setDate(today.getDate() + 1);
+afterTomorrow.setDate(today.getDate() + 2);
+afterTomorrowAfter.setDate(today.getDate() + 3);
+
+let options = { month: 'short', day: 'numeric' };
+
+todayDate.textContent = today.toLocaleDateString('en-US', options);
+tomorrowDate.textContent = tomorrow.toLocaleDateString('en-US', options);
+afterTomDate.textContent = afterTomorrow.toLocaleDateString('en-US', options);
+afterTomAfterDate.textContent = afterTomorrowAfter.toLocaleDateString('en-US', options);
+
+function createCards([title,movie]){
+  let {runtime,image,genre}=movie //destructuring object inside movies array
+return `<div class="movies ${genre}" id="${title}">
+                <img src="${image}" alt="" class="movie1">
+                <div class="overlay"></div>
+                <div class="details">
+                    <p class="movie-name">${title.replace("_"," ")}</p>
+                    <p class="runtime">${runtime}</p>
+                    
+                </div>
+                <button class="buy-ticket" id="buyTicketBtn">Buy Ticket <a href="booking.html"></a></button>
+            </div>`//making a card layout for movie
+
+}
+moviesBox.innerHTML=Object.entries(movies).map(createCards).join('')//converts the object into html elements and return a new array of html to each and every objects
+// Display Movies Function
+function displayMovies() {
+  imgContainer.style.display = "none";
+  moviesBox.style.display = "none";
+
+  // Get genre type from search input and convert to lowercase for case-insensitive match
+  let genreType = searchInput.value.toLowerCase();
+
+  // Filter movies based on the genre
+  let filteredGenre = Object.entries(movies).filter(
+    ([title, movie]) => movie.genre.toLowerCase() === genreType
+  );
+
+  // Generate HTML content for the filtered movies
+  moviesBox.innerHTML = filteredGenre.map(([title, movie]) => {
+    let { runtime, image, genre } = movie;
+    return `<div class="movies ${genre}" id="${title}">
+                <img src="${image}" alt="" class="movie1">
+                <div class="overlay"></div>
+                <div class="details">
+                    <p class="movie-name">${title.replace(/_/g, " ")}</p>
+                    <p class="runtime">${runtime}</p>
+                </div>
+                <button class="buy-ticket" id="buyTicketBtn">Buy Ticket</button>
+            </div>`;
+  }).join("");
+
+  // Show the filtered movies
+  moviesBox.style.display = "flex";
+  attachEventListener()
+}
+
+// Event listener for the search button
+searchBtn.addEventListener("click", displayMovies);
+
+
+ let todayRadio=document.querySelector("#today")
+let tomorrowRadio=document.querySelector("#tomorrow")
+let afterTomRadio=document.querySelector("#after-tom")
+let afterTomAfterRadio=document.querySelector("#after-tom-after")
+
+
+let realDate;
+function attachEventListener(){
+  let buyBtn=document.querySelectorAll("#buyTicketBtn")
+  buyBtn.forEach((btn)=>{
+    btn.addEventListener("click",function(e){
+      if(todayRadio.checked){
+         realDate=todayDate.textContent
+         dateSelected=true
+      }else if(tomorrowRadio.checked){
+       realDate=tomorrowDate.textContent
+       dateSelected=true
+      }else if(afterTomRadio.checked){
+       realDate=afterTomDate.textContent
+       dateSelected=true
+      }else if(afterTomAfterRadio.checked){
+       realDate=afterTomAfterDate.textContent
+       dateSelected=true
+      }
+   
+      let data={
+       movie:e.target.parentElement.id.replace("_"," "),
+       date:realDate,
+       time:movieTime.value
+      }
+  
+      localStorage.setItem('movieData', JSON.stringify(data))
+     if(dateSelected){
+       window.location.href="/Movie-Booking/components/booking.html"
+     }else{
+      alert("Please Select Your Date")
+     }
+     
+      
+   })
+  })
+}
+attachEventListener()
+
+
+ const slides=document.querySelectorAll(".slides img");
 let slideIndex=0;
 let intervalId=null;
 
 initializeSlider()
-
+let searchInput=document.querySelector(".search")
 function initializeSlider(){
     if(slides.length>0){
         slides[slideIndex].classList.add("displaySlide");
@@ -33,85 +159,7 @@ function nextSlide(){
   slideIndex++
   showSlide(slideIndex)
 };
- const searchInput=document.querySelector(".search")
- const searchBtn=document.querySelector(".search-icon")
- const imageContainer=document.querySelector(".img-container")
- const allMovies=document.querySelectorAll(".movies")
- 
-function displayMovies(genre){
-  allMovies.forEach((movie)=>movie.style.display="none")
-  imageContainer.style.display="none"
-  const genreMovie=document.querySelectorAll(`.movies.${genre}`)
-  genreMovie.forEach((movie)=>movie.style.display="flex")
-}
-searchBtn.addEventListener("click",()=>{
-  let searchedGenre=searchInput.value.toLowerCase()
-  displayMovies(searchedGenre)
-})
-const afterTom=document.querySelector(".afterr-tomm")
-const afterTomAfter=document.querySelector(".afterr-tomm-afterr")
-const todayDate=document.querySelector(".todayDate")
-const tomorrowDate=document.querySelector(".tomorrowDate")
-const timeSelected=document.querySelector("#time")
-const today=new Date()
-const tomorrow=new Date()
-const afterTomorrowDate=new Date()
-const afterTomAfterDate=new Date()
-today.setDate(today.getDate())
-tomorrow.setDate(tomorrow.getDate()+1)
-afterTomorrowDate.setDate(afterTomorrowDate.getDate()+2)
-afterTomAfterDate.setDate(afterTomAfterDate.getDate()+3)
-todayTime=today.toDateString()
-tomorrowTime=tomorrow.toDateString()
-afterTomorrowAfter=afterTomAfterDate.toDateString()
-afterTomorrow=afterTomorrowDate.toDateString()
-todayDate.textContent=todayTime.slice(4,10)
-tomorrowDate.textContent=tomorrowTime.slice(4,10)
-afterTom.textContent=afterTomorrow.slice(4,10)
-afterTomAfter.textContent=afterTomorrowAfter.slice(4,10)
 
-let timeSelection=false
-
-const allTicketBtn=document.querySelectorAll(".buy-ticket")
-allTicketBtn.forEach((btn)=>{
-  btn.addEventListener("click",function(){{
-    let clickedMovie=this
-    console.log(clickedMovie.parentElement.id)
-    const encodedId = encodeURIComponent(clickedMovie.parentElement.id);
-    let encodedTime=""
-    let afterTomRadio=document.querySelector("#after-tom")
-    let afterTomAfterRadio=document.querySelector("#after-tom-after")
-    let todayRadio=document.querySelector("#today")
-    let tomorrowRadio=document.querySelector("#tomorrow")
-    const timeReal=timeSelected.value
-    let timeShow=encodeURIComponent(timeReal)
-    if(afterTomRadio&&afterTomRadio.checked){
-      timeSelection=true
-       encodedTime=encodeURIComponent(afterTomRadio.nextElementSibling.textContent)
-      console.log(encodedTime)
-   }else if(afterTomAfterRadio&&afterTomAfterRadio.checked){
-    timeSelection=true
-    encodedTime=encodeURIComponent(afterTomAfterRadio.nextElementSibling.textContent)
-
-   }else if(todayRadio&&todayRadio.checked){
-    timeSelection=true
-    encodedTime=encodeURIComponent(todayRadio.nextElementSibling.textContent)
-   }
-   else if(tomorrowRadio&&tomorrowRadio.checked){
-    timeSelection=true
-    encodedTime=encodeURIComponent(tomorrowRadio.nextElementSibling.textContent)
-   }
-   if(timeSelection){
-    window.location.href = '/Movie-Booking/components/booking.html?id=' + encodedId +'&time=' + encodedTime+'&show='+timeShow
-   }else{
-    alert("Please select time !")
-   }
-   
-
-  }
-
-  })
-})
 const myTicketSection=document.querySelector(".my-ticket")
 myTicketSection.addEventListener("click",function(){
   window.location.href=`/Movie-Booking/components/myTicket.html`

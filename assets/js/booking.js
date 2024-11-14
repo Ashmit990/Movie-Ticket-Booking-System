@@ -1,99 +1,123 @@
 document.body.style.backgroundColor="#2A2D2A"
-const seats=document.querySelectorAll(".box")
-const seatImage=document.querySelectorAll(".seat-img")
 let totalMoney=document.querySelector(".money")
 const selectedMovie=document.querySelector(".selected-name")
 const selectedDate=document.querySelector(".selected-date")
 const selectedTime=document.querySelector("#selected-time")
+let seatContainer=document.querySelector(".seats-screen")
+let proceedBtn=document.querySelector(".proceed-btn")
 
-let totalPrice=0
+
 let seatSelectedNum=0
-        seatImage.forEach((img)=>{
-            img.addEventListener("click",()=>{
-                img.classList.toggle("red-img")
-                if(img.classList.contains("red-img")){
-                    img.src="/Movie-Booking/Photos/red-seat.png"
-                    totalPrice+=300
-                    seatSelectedNum++
-                }else{
-                    img.src="/Movie-Booking/Photos/Seats.png"
-                    totalPrice-=300
-                    
-                }
-                totalMoney.textContent=totalPrice
-                saveData()
-            })
-        })
-        
-        
-        function saveData(){
-            const selectedChairs=Array.from(seatImage).reduce((selected,img,index)=>{
-                if(img.classList.contains("red-img")){
-                       selected.push(index)
-                }
-                return selected
-            },[])
-            let selectedName=selectedMovie.textContent
-            let dateSelected=selectedDate.textContent
-            let selectionTime=selectedTime.textContent
-            let uniqueElement1=`${selectedName}_${dateSelected}_${selectionTime}_selectedOnes`
-            let uniqueElement2=`${selectedName}_${dateSelected}_${selectionTime}_totalPriceIncluded`
-                    
 
+let rows=['A','B','C','D','E','F','G','H','I','J','K']
+let seatsPerRow=18
+ 
+function generateSeats(){
+    rows.forEach((row)=>{
+        let seatRow=document.createElement("div")
+        seatRow.classList.add("seat-row")
 
-            localStorage.setItem(uniqueElement1,JSON.stringify(selectedChairs))
-            localStorage.setItem(uniqueElement2,totalPrice)
+        for(let i=1; i<=seatsPerRow; i++){
+            let seatBox=document.createElement("div")
+            seatBox.classList.add("box")
+
+            let seatImg=document.createElement("img")
+            seatImg.src=`/Movie-Booking/Photos/Seats.png`;
+            seatImg.classList.add("seat-img")
+
+            let seatName=document.createTextNode(`${row}${i}`)
+
+            seatBox.appendChild(seatImg)
+            seatBox.appendChild(seatName)
+
+            seatRow.appendChild(seatBox)
         }
-        
-        function loadData(){
-            let selectedName=selectedMovie.textContent
-            let dateSelected=selectedDate.textContent
-            let selectionTime=selectedTime.textContent
-            let uniqueElement1=`${selectedName}_${dateSelected}_${selectionTime}_selectedOnes`
-            let uniqueElement2=`${selectedName}_${dateSelected}_${selectionTime}_totalPriceIncluded`
-            const allSavedSeats=JSON.parse(localStorage.getItem(uniqueElement1)) || []
-             totalPrice=parseInt(localStorage.getItem(uniqueElement2)) || 0
-            allSavedSeats.forEach((index)=>{
-                seatImage[index].classList.add("red-img")
-                seatImage[index].src="Photos/red-seat.png";
-                seatImage[index].style.pointerEvents="none"
-                
-            })
-            totalMoney.textContent=totalPrice
+        seatContainer.appendChild(seatRow)
+    })
+}
+
+generateSeats()
+
+const seatImage = document.querySelectorAll(".seat-img");
+let totalPrice = 0; 
+
+// Load saved seat and price data when the page loads
+window.addEventListener("load", loadSeats);
+
+// Click event for seat selection
+seatImage.forEach((img) => {
+    
+
+    img.addEventListener("click", () => {
+        img.classList.toggle("red-img");
+        if (img.classList.contains("red-img")) {
+            img.src = "/Movie-Booking/Photos/red-seat.png";
+            totalPrice += 300; // Add price
+        } else {
+            img.src = "/Movie-Booking/Photos/Seats.png";
+            totalPrice -= 300; // Subtract price
         }
-        window.addEventListener("load", loadData);
+
+        totalMoney.textContent = totalPrice; // Update displayed total
+        saveSeats(); // Save current seat and price data
+    });
+});
+
+let details = JSON.parse(localStorage.getItem('movieData'));
+selectedMovie.textContent = details.movie.replace("_"," ");
+selectedDate.textContent = details.date;
+selectedTime.textContent = details.time;
+
+// Save selected seats and total price to localStorage
+function saveSeats() {
+    // Get indices of selected seats
+    const selectedIndices = Array.from(seatImage).reduce((selected, img, index) => {
+        if (img.classList.contains("red-img")) {
+            selected.push(index);
+        }
+        return selected;
+    }, []);
+
+    // Get text content of each selected seat's parent element
+    const selectedSeatNames = Array.from(seatImage)
+        .filter(img => img.classList.contains("red-img"))
+        .map(img => img.parentElement.textContent)
+        .join(", ");
+
+    // Update details object with selected seats and total price
+    details.selectedSeats = selectedSeatNames;
+    details.totalPrice = totalPrice;
+
+    // Save unique keys in localStorage for each movie/time/date
+    let uniqueSeats = `${details.movie}_${details.time}_${details.date}_seats`;
+    let uniquePrices = `${details.movie}_${details.time}_${details.date}_price`;
+    
+    localStorage.setItem(uniqueSeats, JSON.stringify(selectedIndices));
+    localStorage.setItem(uniquePrices, totalPrice);
+    localStorage.setItem("movieData", JSON.stringify(details)); // Update localStorage with modified details
+    
+
+    // Log the updated details to the console
+    console.log("Updated details:", details);
+}
 
 
-document.addEventListener("DOMContentLoaded",()=>{
-    const urlParams=new URLSearchParams(window.location.search)
-    const movieName=urlParams.get('id')
-    const movieTime=urlParams.get('time')
-    const movieShow=urlParams.get('show')
-    console.log(movieName)
-    console.log(movieTime)
-    selectedMovie.textContent=movieName
-    selectedDate.textContent=movieTime
-    selectedTime.textContent=movieShow
+// Load saved seats and price from localStorage
+function loadSeats() {
+    let uniqueSeats = `${details.movie}_${details.time}_${details.date}_seats`;
+    let uniquePrices = `${details.movie}_${details.time}_${details.date}_price`;
+
+    let totalSeats = JSON.parse(localStorage.getItem(uniqueSeats)) || [];
+    totalPrice = parseInt(localStorage.getItem(uniquePrices)) || 0; // Load saved price
+
+    totalSeats.forEach((index) => {
+        seatImage[index].classList.add("red-img");
+        seatImage[index].src = "/Movie-Booking/Photos/red-seat.png";
+        seatImage[index].style.pointerEvents = "none";  
+    });
+    totalMoney.textContent = totalPrice; // Display the loaded price
+}
+
+proceedBtn.addEventListener("click",function(){
+window.location.href=`/Movie-Booking/components/confirmation.html`
 })
-const nextBtn=document.querySelector(".proceed-btn")
-nextBtn.addEventListener("click",function (){
-    
-    
-    
-    showTime=selectedTime.value
-    let realTime=encodeURIComponent(selectedTime.textContent)
-    let realDate=encodeURIComponent(selectedDate.textContent)
-    let realName=encodeURIComponent(selectedMovie.textContent)
-    let selectedSeats=Array.from(seatImage).filter((seat)=>seat.classList.contains("red-img")).map((seat)=>seat.parentElement.textContent)
-    allSeats=encodeURIComponent(selectedSeats.join(","))
-    allExpenses=encodeURIComponent(totalMoney.textContent)
-    console.log(allSeats)
-    if(totalPrice>0){
-        window.location.href='/Movie-Booking/components/confirmation.html?id='+realTime+'&seats='+allSeats+'&money='+allExpenses+'&date='+realDate+'&name='+realName
-    }else{
-        alert("Please select seats")
-    }
-
-
-})
-
